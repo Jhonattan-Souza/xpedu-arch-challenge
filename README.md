@@ -5,29 +5,12 @@ Descrição
 - Inclui endpoints de CRUD, contagem, busca por ID, listagem completa e busca por nome (retorna múltiplos registros).
 - Diagrama de arquitetura no formato C4 (PlantUML) disponível em `docs/components.puml`.
 
-Arquitetura (Camadas)
-- Controller (Rotas): expõe HTTP e transforma requisições em chamadas de serviço. Arquivos em `app/routers/*`.
-- Service (Aplicação): orquestra casos de uso e validações de alto nível. Arquivos em `app/services/*`.
-- Domain (Modelo de Negócio): entidades e regras do domínio. Arquivos em `app/domain/*`.
-- Infrastructure (Técnica): ORM, repositórios, sessão do banco e integrações. Arquivos em `app/infrastructure/*`.
-
 Estrutura MVC
 - Controller: `app/routers/*` — recebe a requisição HTTP, valida a entrada, chama o serviço certo e define status code de resposta.
 - Model: duas partes aqui:
   - Domínio: `app/domain/*` — as entidades e regras do negócio (não sabem nada de banco ou web).
   - Persistência: `app/infrastructure/customer_model.py` — o modelo ORM que mapeia a tabela e conversa com o banco.
 - View: em API, a “view” é o que a gente devolve em JSON. Aqui são os modelos Pydantic de request/response em `app/routers/*_request.py` e `app/routers/*_response.py` (eles formatam o que entra e o que sai).
-
-Estrutura de Pastas
-- `app/main.py`: instancia o FastAPI e registra as rotas; cria as tabelas.
-- `app/routers/customers.py`: rotas REST de clientes.
-- `app/routers/create_customer_request.py`: schema de entrada (Pydantic) para criação/atualização.
-- `app/services/customer_service.py`: casos de uso de clientes.
-- `app/domain/customer.py`: entidade de domínio Customer.
-- `app/infrastructure/customer_model.py`: modelo ORM (SQLAlchemy) de Customer.
-- `app/infrastructure/customer_repository.py`: repositório (CRUD, busca e contagem).
-- `app/infrastructure/session.py`: engine e fábrica de sessões; lê `DATABASE_URL`.
-- `docs/components.puml`: diagrama C4 (PlantUML) dos componentes.
 
 Pastas
 - `app/`: onde vive o código da API.
