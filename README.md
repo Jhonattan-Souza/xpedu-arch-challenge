@@ -11,6 +11,13 @@ Arquitetura (Camadas)
 - Domain (Modelo de Negócio): entidades e regras do domínio. Arquivos em `app/domain/*`.
 - Infrastructure (Técnica): ORM, repositórios, sessão do banco e integrações. Arquivos em `app/infrastructure/*`.
 
+Estrutura MVC
+- Controller: `app/routers/*` — recebe a requisição HTTP, valida a entrada, chama o serviço certo e define status code de resposta.
+- Model: duas partes aqui:
+  - Domínio: `app/domain/*` — as entidades e regras do negócio (não sabem nada de banco ou web).
+  - Persistência: `app/infrastructure/customer_model.py` — o modelo ORM que mapeia a tabela e conversa com o banco.
+- View: em API, a “view” é o que a gente devolve em JSON. Aqui são os modelos Pydantic de request/response em `app/routers/*_request.py` e `app/routers/*_response.py` (eles formatam o que entra e o que sai).
+
 Estrutura de Pastas
 - `app/main.py`: instancia o FastAPI e registra as rotas; cria as tabelas.
 - `app/routers/customers.py`: rotas REST de clientes.
@@ -21,6 +28,15 @@ Estrutura de Pastas
 - `app/infrastructure/customer_repository.py`: repositório (CRUD, busca e contagem).
 - `app/infrastructure/session.py`: engine e fábrica de sessões; lê `DATABASE_URL`.
 - `docs/components.puml`: diagrama C4 (PlantUML) dos componentes.
+
+Pastas
+- `app/`: onde vive o código da API.
+- `app/routers/`: endpoints HTTP (Controllers) e os modelos Pydantic de request/response (fazem o papel de View na API).
+- `app/services/`: regras de aplicação e orquestração dos casos de uso.
+- `app/domain/`: modelos do domínio (o “M” de MVC do ponto de vista de negócio).
+- `app/infrastructure/`: conversa com o banco (ORM, repositório, sessão) — também parte do “M”, mas focado em persistência.
+- `docs/`: diagramas e materiais de arquitetura.
+- `Dockerfile`/`.dockerignore`: suporte pra build e container.
 
 Requisitos
 - Python 3.13+
