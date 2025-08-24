@@ -1,0 +1,23 @@
+@startuml CustomerApiComponent
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_LEFT_RIGHT()
+
+System_Ext(client, "Cliente", "Usuários/Sistemas via HTTP")
+
+Container_Boundary(system, "Serviço de Clientes") {
+  Component(presentation, "Camada de Apresentação", "Interfaces", "Adaptadores HTTP/API")
+  Component(application, "Camada de Aplicação", "Services", "Orquestra fluxos de trabalho")
+  Component(domain, "Camada de Domínio", "Modelo de Negócio", "Entidades, Objetos de Valor, Regras")
+  Component(infrastructure, "Camada de Infraestrutura", "Serviços Técnicos", "Repositórios, Integrações Externas")
+}
+
+ComponentDb(db, "Banco de Dados Relacional", "SQL", "Dados de Clientes")
+
+Rel(client, presentation, "Chama a API")
+Rel(presentation, application, "Invoca services")
+Rel(application, domain, "Manipula o modelo de negócio")
+Rel(application, infrastructure, "Persiste e integra")
+Rel(infrastructure, db, "CRUD")
+
+@enduml

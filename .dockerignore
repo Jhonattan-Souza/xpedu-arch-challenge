@@ -1,0 +1,28 @@
+# Bancos locais
+app.db
+*.db
+*.sqlite3
+
+# Ambientes e credenciais
+.venv/
+.env
+.env.*
+.python-version
+
+# Cache/artefatos Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Git e IDEs
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Testes/coverage (se existirem)
+pytest_cache/
+.coverage
+htmlcov/
